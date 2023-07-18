@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Route::prefix('users')
     ->middleware([
+        'auth',
         'admin',
     ])
     ->controller(UserController::class)
