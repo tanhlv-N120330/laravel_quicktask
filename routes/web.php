@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,20 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('users')
-    ->middleware([
-        'auth',
-        'admin',
-    ])
-    ->controller(UserController::class)
-    ->group(function () {
-        Route::get('/', 'index')->name('users.index');
-        Route::get('/create', 'create')->name('users.create');
-        Route::get('/edit', 'edit')->name('users.edit');
-        Route::get('/{user}', 'show')->name('users.show');
-        Route::post('/', 'store')->name('users.store');
-        Route::put('/{user}', 'update')->name('users.update');
-        Route::delete('/{user}', 'destroy')->name('users.destroy');
-    });
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::resource('posts', PostController::class);
+require __DIR__.'/auth.php';
