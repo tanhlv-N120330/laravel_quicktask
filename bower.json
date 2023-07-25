@@ -1,0 +1,25 @@
+{
+  "name": "init_project",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Tanh101 <lytanh@starboard-asia.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/tanhlv-N120330/laravel_quicktask",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "template-bower-example": "manhtd-1083/template-bower-example",
+    "light-bootstrap-dashboard": "https://demos.creative-tim.com/light-bootstrap-dashboard/",
+    "default": "https://coreui.io/demos/bootstrap/4.3/default/",
+    "tm-590-topic-listing": "https://templatemo.com/tm-590-topic-listing",
+    "FreeDash-lite": "https://github.com/adminmart/FreeDash-lite.git"
+  }
+}
