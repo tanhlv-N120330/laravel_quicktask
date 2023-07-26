@@ -12,16 +12,24 @@
                     {{ __("User Edit") }}
                 </div>
             </div>
-            <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
+            <form action="{{ route('posts.update', ['post' => $post->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mt-4">
-                    <x-label for="username" :value="__('Username')" />
-                    <x-input id="username" class="block mt-1 w-full text-gray-900"
+                    <x-label for="title" :value="__('Title')" />
+                    <x-input id="title" class="block mt-1 w-full text-gray-900"
                         type="text"
-                        name="username"
-                        required autocomplete="username"
-                        value="{{$user->username}}" />
+                        name="title"
+                        required autocomplete="title"
+                        value="{{$post->title}}" />
+                </div>
+                <div class="mt-4">
+                    <x-label for="content" :value="__('Content')" />
+                    <x-input id="content" class="block mt-1 w-full text-gray-900"
+                        type="text"
+                        name="content"
+                        required autocomplete="content"
+                        value="{{$post->content}}" />
                 </div>
                 <x-button class="mt-4">
                     {{ __('Update') }}

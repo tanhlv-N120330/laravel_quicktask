@@ -13,12 +13,12 @@
                 </div>
             </div>
             <div class="mt-4">
-                <x-label for="task" :value="__('Task')" />
+                <x-label for="post" :value="__('Post')" />
 
-                <x-input id="task" class="block mt-1 w-full"
+                <x-input id="post" class="block mt-1 w-full"
                                 type="text"
-                                name="task"
-                                required autocomplete="task" />
+                                name="post"
+                                required autocomplete="post" />
             </div>
             <x-button class="mt-4">
                 {{ __('+') }}

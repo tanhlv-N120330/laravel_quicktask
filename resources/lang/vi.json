@@ -72,10 +72,17 @@
     "You're logged in!": "Bạn đã đăng nhập!",
     "Your email address is unverified.": "Địa chỉ email của bạn chưa được xác minh.",
     "User List" : "Danh sách người dùng",
-    "Create new user": "TẠO MỚI NGƯỜI DÙNG",
-    "EDIT" : "SỬA",
-    "DELETE" : "XÓA",
-    "Name" : "Tên",
-    "Username" : "Tên đăng nhập"
-
+    "User Edit" : "Sửa người dùng",
+    "Create New User": "Tạo mới người dùng",
+    "Edit" : "SỬA",
+    "Delete" : "XÓA",
+    "Username" : "Tên đăng nhập",
+    "Post List": "Danh sách bài viết",
+    "Create New Post" : "Tạo mới bài viết",
+    "Create" : "Tạo",
+    "Edit Post" : "Sửa bài viết",
+    "Update" : "Cập nhật",
+    "Title" : "Tiêu đề",
+    "Content" : "Nội dung",
+    "Action" : "Hành động"
 }
