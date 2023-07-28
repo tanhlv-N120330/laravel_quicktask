@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('User List') }}
+            {{ __('Post List') }}
         </h2>
     </x-slot>
 
@@ -9,44 +9,40 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("User List") }}
+                    {{ __("Post List") }}
                 </div>
             </div>
             <div class="w-full mt-8">
-                <x-button>
-                    {{ __('Create New User') }}
-                </x-button>
+                <a href="{{route('posts.create')}}">
+                    <x-button>
+                        {{ __('Create New Post') }}
+                    </x-button>
+                </a>
                 <table class="mt-4 table w-full">
                     <thead>
                         <tr class="border-b-2 text-gray-900 dark:text-gray-100" scope="col">
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>Posts</th>
+                            <th>Title</th>
+                            <th>Content</th>
                             <th>Action</th>
                         </tr>
                         <tbody>
                     </thead>
-                        @foreach ($users as $index => $user )
+                        @foreach ($posts as $index => $post )
                             <tr class="border-b-2 text-gray-900 dark:text-gray-100 text-center">
                                 <th scope="row">{{$index}}</th>
-                                <td>{{$user->full_name}}</td>
-                                <td>{{$user->username}}</td>
+                                <td>{{$post->title}}</td>
+                                <td>{{$post->content}}</td>
                                 <td>
-                                    @foreach ($user->posts as $post )
-                                        {{$post->title}}
-                                    @endforeach
-                                </td>
-                                <td>
-                                    <a href="{{ route('users.edit', ['user' => $user->id]) }}">
-                                        <x-button class="mt-2 w-full justify-center">
+                                    <a href="{{ route('posts.edit', ['post' => $post->id]) }}">
+                                        <x-button class="w-full mt-2 justify-center">
                                             {{ __('Edit') }}
                                         </x-button>
                                     </a>
-                                    <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST">
+                                    <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST" class="inline-block">
                                         @csrf
                                         @method('DELETE')
-                                        <x-button type="submit" class="mt-2 mb-2">
+                                        <x-button type="submit" class="mt-2 mb-4">
                                             {{ __('Delete') }}
                                         </x-button>
                                     </form>

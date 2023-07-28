@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -14,10 +19,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        
+        $users = User::with('posts')->get();
+
         return view('users.index', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
 
@@ -28,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -37,9 +42,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $user = new User();
+        $user->fill($validated);
+        $user->password = Hash::make($validated['password']);
+        $user->is_admin = false;
+        $user->is_active = true;
+        $user->save();
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -71,9 +85,13 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $validated = $request->validated();
+        $user->fill($validated);
+        $user->save();
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -84,6 +102,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->posts()->delete();
+        $user->delete();
+
+        return redirect()->route('users.index');
     }
 }

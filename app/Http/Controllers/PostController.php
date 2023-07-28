@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -14,7 +17,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        $posts = DB::table('posts')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return view('posts.index', [
+            'posts' => $posts,
+        ]);
     }
 
     /**
@@ -24,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -33,9 +42,17 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        DB::table('posts')->insert([
+            'title' => $validated['title'],
+            'content'  => $validated['content'],
+            'user_id' => $request->user()->id,
+        ]);
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -57,7 +74,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        if ($post->user_id != auth()->user()->id) {
+            abort(403);
+        }
+
+        return view('posts.edit', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -67,9 +90,18 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $validated = $request->validated();
+
+        DB::table('posts')
+            ->where('id', $post->id)
+            ->update([
+                'title' => $validated['title'],
+                'content'  => $validated['content'],
+            ]);
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -80,6 +112,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if ($post->user_id != auth()->user()->id) {
+            abort(403);
+        }
+        $post->delete();
+
+        return redirect()->route('posts.index');
     }
 }
